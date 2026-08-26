@@ -79,5 +79,5 @@ bloqueio, mas um aplicativo comum não pode reescrever a partição do sistema.
 
 ## Licença
 
-Este projeto é dedicado ao domínio público pela **Unlicense**. Use, estude,
+Este projeto é dedicado ao domínio público pela **CC0 1.0 Universal**. Use, estude,
 modifique, compartilhe e reaproveite sem pedir permissão.
