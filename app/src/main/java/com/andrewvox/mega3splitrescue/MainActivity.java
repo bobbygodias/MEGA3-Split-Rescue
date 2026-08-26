@@ -264,7 +264,7 @@ public final class MainActivity extends Activity {
         Process process = null;
         try {
             // Shizuku 13 keeps this compatibility bridge package-private. Calling it
-            // reflectively avoids shipping a broad UserService for six fixed commands.
+            // reflectively avoids shipping a broad UserService for these fixed commands.
             java.lang.reflect.Method newProcess = Shizuku.class.getDeclaredMethod(
                     "newProcess", String[].class, String[].class, String.class);
             newProcess.setAccessible(true);
@@ -273,11 +273,24 @@ public final class MainActivity extends Activity {
                     new String[] {"sh", "-c", command},
                     null,
                     null);
-            boolean finished = process.waitFor(12, TimeUnit.SECONDS);
+
+            // IMPORTANT: ShizukuRemoteProcess does not override Process.waitFor(long,
+            // TimeUnit). The Java default implementation polls exitValue(), while the
+            // Shizuku remote implementation reports "process hasn't exited" as an
+            // IllegalArgumentException. Use Shizuku's own waitForTimeout() instead.
+            java.lang.reflect.Method waitForTimeout = process.getClass().getMethod(
+                    "waitForTimeout", long.class, TimeUnit.class);
+            boolean finished = Boolean.TRUE.equals(
+                    waitForTimeout.invoke(process, 12L, TimeUnit.SECONDS));
+
             if (!finished) {
-                process.destroy();
+                try {
+                    process.destroy();
+                } catch (Throwable ignored) {
+                }
                 return "ERRO: comando excedeu 12 segundos.";
             }
+
             String stdout = readAll(process.getInputStream());
             String stderr = readAll(process.getErrorStream());
             String combined = stdout.trim();
@@ -287,9 +300,15 @@ public final class MainActivity extends Activity {
             if (combined.isEmpty()) combined = "OK (sem saída)";
             return combined + "\nexit=" + process.exitValue();
         } catch (Throwable error) {
-            return "ERRO: " + error.getClass().getSimpleName() + ": " + error.getMessage();
+            Throwable cause = error.getCause() != null ? error.getCause() : error;
+            return "ERRO: " + cause.getClass().getSimpleName() + ": " + cause.getMessage();
         } finally {
-            if (process != null) process.destroy();
+            if (process != null) {
+                try {
+                    process.destroy();
+                } catch (Throwable ignored) {
+                }
+            }
         }
     }
 
