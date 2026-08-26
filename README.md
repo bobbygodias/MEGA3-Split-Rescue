@@ -8,7 +8,7 @@ desbloquear o bootloader e sem tocar nos arquivos pessoais do aparelho.
 
 ## Estado atual
 
-- Versão: **0.2.0**
+- Versão: **0.3.0**
 - Pacote: `com.andrewvox.mega3splitrescue`
 - Android mínimo: 8.0 (API 26)
 - Android alvo: 15 (API 35)
@@ -16,17 +16,24 @@ desbloquear o bootloader e sem tocar nos arquivos pessoais do aparelho.
 - Root: não
 - Telemetria, anúncios e rastreadores: nenhum
 
-A v0.2 corrige a integração do APK com o Shizuku: inclui a permissão de cliente
-`API_V23` e o metadado `V3_SUPPORT`, necessários para o binder chegar ao app.
+A v0.2 corrigiu a integração do APK com o Shizuku, incluindo a permissão de
+cliente `API_V23` e o metadado `V3_SUPPORT` necessários para o binder chegar ao
+app. O teste físico confirmou essa parte.
+
+A v0.3 corrige o executor remoto: `ShizukuRemoteProcess` possui o método próprio
+`waitForTimeout(long, TimeUnit)`. Usar o `Process.waitFor(long, TimeUnit)` padrão
+causava `IllegalArgumentException: process hasn't exited` antes que o app pudesse
+coletar a saída dos comandos.
 
 ## Como usar
 
-1. Instale a v0.2 por cima da v0.1; não é necessário desinstalar.
+1. Instale a v0.3 por cima da versão atual; não é necessário desinstalar.
 2. Inicie e pareie o Shizuku pela depuração sem fio.
 3. Abra o MEGA3 Split Rescue e toque em **Pedir permissão ao Shizuku**.
-4. Execute **Diagnosticar multi-janela**.
-5. Execute **Aplicar reparo seguro**.
-6. Volte à tela de apps recentes e teste a divisão de tela.
+4. Execute primeiro **Diagnosticar multi-janela**.
+5. Confira a saída real dos comandos.
+6. Só então execute **Aplicar reparo seguro** se o diagnóstico indicar que as flags precisam ser restauradas.
+7. Volte à tela de apps recentes e teste a divisão de tela.
 
 O Shizuku precisa ser iniciado novamente depois de cada reinicialização do
 Android. Isso é uma limitação do funcionamento sem root.
