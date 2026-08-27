@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>OpenPGP Enterprise</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#0d1117;color:#e6edf3}*{box-sizing:border-box}body{margin:0;padding:18px;max-width:900px;margin:auto}h1{margin:.2em 0;font-size:1.7rem}p{color:#9da7b3}.card{border:1px solid #30363d;border-radius:14px;padding:14px;margin:12px 0;background:#161b22}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:650px){.row{grid-template-columns:1fr}}input,textarea,button{width:100%;border-radius:9px;border:1px solid #30363d;background:#0d1117;color:#e6edf3;padding:11px;font:inherit}textarea{min-height:130px;resize:vertical}button{background:#238636;border-color:#2ea043;font-weight:700;margin-top:8px}button.secondary{background:#1f6feb;border-color:#388bfd}.status{white-space:pre-wrap;font-family:monospace;font-size:.9rem}.good{color:#3fb950}.bad{color:#f85149}label{display:block;margin-top:8px;font-size:.88rem;color:#9da7b3}.tiny{font-size:.8rem;color:#8b949e}
+</style>
+</head>
+<body>
+<h1>OpenPGP Enterprise</h1>
+<p>OpenPGP.js 6.3.1 • execução local • sem nuvem • sem telemetria</p>
+<div class="card"><b>Runtime</b><div id="diag" class="status">Verificando…</div></div>
+<div class="card">
+<h3>Gerar par de chaves</h3>
+<div class="row"><div><label>Nome</label><input id="name" value="Bobby Dias"></div><div><label>E-mail / identificador</label><input id="email" placeholder="nome@exemplo.com"></div></div>
+<label>Frase-senha da chave privada</label><input id="pass" type="password" autocomplete="new-password">
+<button id="gen">Gerar Curve25519</button>
+<label>Chave pública</label><textarea id="pub" spellcheck="false"></textarea>
+<label>Chave privada</label><textarea id="priv" spellcheck="false"></textarea>
+<div class="tiny">A chave privada não é salva automaticamente pelo aplicativo.</div>
+</div>
+<div class="card">
+<h3>Criptografar / descriptografar texto</h3>
+<label>Texto</label><textarea id="plain"></textarea>
+<button id="enc" class="secondary">Criptografar para a chave pública acima</button>
+<label>Mensagem PGP</label><textarea id="cipher" spellcheck="false"></textarea>
+<button id="dec">Descriptografar com a chave privada acima</button>
+</div>
+<div class="card">
+<h3>Assinar / verificar</h3>
+<label>Texto para assinatura</label><textarea id="signText"></textarea>
+<button id="sign" class="secondary">Criar assinatura cleartext</button>
+<label>Mensagem assinada</label><textarea id="signed" spellcheck="false"></textarea>
+<button id="verify">Verificar assinatura</button>
+<div id="result" class="status"></div>
+</div>
+<script type="module" src="app.js"></script>
+</body></html>

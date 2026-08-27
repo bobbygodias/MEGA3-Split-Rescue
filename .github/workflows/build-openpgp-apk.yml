@@ -1,0 +1,42 @@
+name: Build OpenPGP Enterprise APK
+on:
+  workflow_dispatch:
+  push:
+    branches: [ openpgp-apk-v1 ]
+    paths:
+      - 'openpgp-android/**'
+      - '.github/workflows/build-openpgp-apk.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: openpgp-android
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Install pinned OpenPGP.js bundle
+        run: |
+          npm pack openpgp@6.3.1
+          tar -xzf openpgp-6.3.1.tgz package/dist/openpgp.min.mjs package/LICENSE
+          cp package/dist/openpgp.min.mjs app/src/main/assets/openpgp.min.mjs
+          cp package/LICENSE app/src/main/assets/OPENPGPJS-LICENSE.txt
+          sha256sum app/src/main/assets/openpgp.min.mjs > app/src/main/assets/OPENPGPJS-SHA256.txt
+          rm -rf package openpgp-6.3.1.tgz
+      - name: Install Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Build debug APK
+        run: gradle :app:assembleDebug --stacktrace
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: OpenPGP-Enterprise-MEGA3
+          path: openpgp-android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
