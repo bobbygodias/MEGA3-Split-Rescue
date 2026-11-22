@@ -6,9 +6,15 @@ divisão de tela no **Blackview MEGA 3**, com **Android 15 / DokeOS P 4.2**.
 O projeto nasceu para resolver um problema real sem formatar o tablet, sem
 desbloquear o bootloader e sem tocar nos arquivos pessoais do aparelho.
 
-## Estado atual
+## Estado atual — BUG ABERTO (22/11/2026)
 
-- Versão: **0.3.0**
+**A divisão de tela do Blackview MEGA 3 ainda NÃO foi restaurada.** O proprietário confirmou a falha em 22/11/2026. A versão **0.3.0-debug** é um artefato de desenvolvimento, não uma solução funcional concluída. As correções de integração e de execução via Shizuku foram etapas internas e não comprovam que o recurso voltou a funcionar.
+
+O tablet **dividia a tela normalmente antes** e, segundo relato do proprietário, parou sem atualização ou patch conhecido do DokeOS. **Não há evidência de que o fabricante tenha removido a funcionalidade.** Um relato de Gmail abrindo Firefox lado a lado em 29/08/2026 é uma pista de alguma rota de multi-janela ainda operante, sem comprovar reparo global. Ver [issue #1](https://github.com/bobbygodias/MEGA3-Split-Rescue/issues/1) para diagnóstico pendente e definição de pronto.
+
+O objetivo de reduzir dependências de ferramentas externas deve ser pesquisado tecnicamente, distinguindo APIs acessíveis a apps comuns de operações que realmente exigem privilégios. Não prometer independência de Shizuku/ADB sem demonstrar uma implementação viável no Android 15.
+
+- Versão de desenvolvimento: **0.3.0-debug**
 - Pacote: `com.andrewvox.mega3splitrescue`
 - Android mínimo: 8.0 (API 26)
 - Android alvo: 15 (API 35)
@@ -27,7 +33,7 @@ coletar a saída dos comandos.
 
 ## Como usar
 
-1. Instale a v0.3 por cima da versão atual; não é necessário desinstalar.
+1. **Atenção:** a v0.3 é debug e ainda não resolveu o problema. Uma assinatura de teste diferente pode impedir atualização por cima de outra build; não desinstale a versão existente sem preservar o que for necessário. Realize testes apenas quando houver condições e um plano verificado.
 2. Inicie e pareie o Shizuku pela depuração sem fio.
 3. Abra o MEGA3 Split Rescue e toque em **Pedir permissão ao Shizuku**.
 4. Execute primeiro **Diagnosticar multi-janela**.
