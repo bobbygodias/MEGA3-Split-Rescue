@@ -6,6 +6,14 @@ divisão de tela no **Blackview MEGA 3**, com **Android 15 / DokeOS P 4.2**.
 O projeto nasceu para resolver um problema real sem formatar o tablet, sem
 desbloquear o bootloader e sem tocar nos arquivos pessoais do aparelho.
 
+## Incorporação ao aplicativo principal — 22/11/2026
+
+Por decisão de Bobby Dias, este protótipo deve ser **incorporado ao [Dont-Tread-On-My-Smartphone](https://github.com/bobbygodias/Dont-Tread-On-My-Smartphone)**. O objetivo não é manter dois aplicativos distintos. O código de origem é preservado neste repositório como referência histórica e técnica.
+
+A integração dos recursos de diagnóstico, ajustes de múltiplas janelas e alternância opcional de Acessibilidade está proposta no **[PR #5 (rascunho)](https://github.com/bobbygodias/Dont-Tread-On-My-Smartphone/pull/5)**. **Ainda não houve merge à branch principal, teste físico satisfatório ou restauração comprovada da função.**
+
+Prosseguir com desenvolvimento no repositório principal, evitando novas versões concorrentes deste app. Manter [issue #1](https://github.com/bobbygodias/MEGA3-Split-Rescue/issues/1) aberta até o usuário confirmar a recuperação no tablet real.
+
 ## Estado atual — BUG ABERTO (22/11/2026)
 
 **A divisão de tela do Blackview MEGA 3 ainda NÃO foi restaurada.** O proprietário confirmou a falha em 22/11/2026. A versão **0.3.0-debug** é um artefato de desenvolvimento, não uma solução funcional concluída. As correções de integração e de execução via Shizuku foram etapas internas e não comprovam que o recurso voltou a funcionar.
